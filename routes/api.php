@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\BookController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,12 +16,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::post('login', [UserController::class, 'login']);
 Route::post('register', [UserController::class, 'register']);
 Route::post('logout', [UserController::class, 'logout']);
+
+Route::middleware('auth')->group(function() {
+    Route::get('/','API\BookController@index')->name('api.books');
+    Route::get('/lastadd','API\BookController@lastadd')->name('api.books.lastadd');
+    Route::get('add','API\BookController@add')->name('api.books.add');
+    Route::get('edit/{id}','API\BookController@edit')->name('api.books.edit');
+    Route::get('update/{id}','API\BookController@update')->name('api.books.update');
+    Route::get('delete/{id}','API\BookController@delete')->name('api.books.delete');
+});
+
+
 
 
