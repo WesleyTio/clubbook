@@ -17,7 +17,6 @@ class UserSeeder extends Seeder
         //
         $dados =[
             'name' =>"José Wesley",
-            'login' =>"ChacalTio",
             'email' => "wesleymagnos@hotmail.com",
             'password' => bcrypt("123456")
         ];
@@ -33,7 +32,6 @@ class UserSeeder extends Seeder
         //Outro tipo de usuario pra testes!
         $dados2 =[
             'name' =>"José Tio",
-            'login' =>"WesleyTio",
             'email' => "wesleymagnos@gmail.com",
             'password' => bcrypt("123456")
 
@@ -47,6 +45,6 @@ class UserSeeder extends Seeder
             User::create($dados2);
             echo "usuario 2 criado";
         }
-        
+
     }
 }

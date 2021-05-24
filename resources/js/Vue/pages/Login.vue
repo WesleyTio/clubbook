@@ -1,11 +1,13 @@
 <template>
     <div class="container-fluid d-flex justify-content-center h-100" style="margin-top: 10%">
 
-        <div class="card shadow p-0 mb-3  rounded" style="width: 18rem;">
 
+        <div class="card shadow p-0 mb-3  rounded" style="width: 18rem;">
+            <div class="alert alert-danger" role="alert" v-if="user.error !== null" style="align-self: center;">
+                {{ user.error }}
+            </div>
             <div class=" card-body d-flex justify-content-center form_container">
                 <form  method="post" >
-
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text bg-success text-light">
@@ -58,20 +60,24 @@ export default {
     methods: {
         login(e){
             e.preventDefault()
-            this.$http.post('/api/login',{
-                email: this.email,
-                password: this.password
-            }).then(response => {
-                console.log(response.data);
-                if(response.data.success) {
+            this.$http.get('/sanctum/csrf-cookie').then(response =>{
+                this.$http.post('api/login', {
+                    email: this.user.email,
+                    password: this.user.password
+                })
+                .then(response => {
+                    console.log(response.data);
+                    if (response.data.success) {
+                        //this.$router.go('/dashboard')
+                    } else {
+                        this.user.error = response.data.message
+                    }
 
-                }else{
-                    this.error =response.data.message
-                }
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
             })
-            .catch(function (error){
-                console.error(error);
-            });
         }
     }
 

@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', [UserController::class, 'login']);
 Route::post('register', [UserController::class, 'register']);
-Route::post('logout', [UserController::class, 'logout']);
+Route::post('logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
 
-Route::middleware('auth')->group(function() {
+Route::middleware('auth:sanctum')->group(function() {
     Route::get('/','API\BookController@index')->name('api.books');
     Route::get('/lastadd','API\BookController@lastadd')->name('api.books.lastadd');
     Route::get('add','API\BookController@add')->name('api.books.add');

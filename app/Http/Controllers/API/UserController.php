@@ -8,6 +8,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Stmt\TryCatch;
+use SebastianBergmann\Environment\Console;
 
 class UserController extends Controller
 {
@@ -17,7 +18,6 @@ class UserController extends Controller
             $user = new User();
             $user->name = $request->name;
             $user->email = $request->email;
-            $user->login = $request->login;
             $user->password = bcrypt($request->password);
             $user->save();
 
@@ -40,9 +40,13 @@ class UserController extends Controller
 
     public function login(Request $request){
 
-        $dados= $request->all();
-        if(Auth::attempt(['email' => $dados['email'], 'password' => $dados['password']])){
 
+        $dados = [
+            'email' => $request->email,
+            'password' => $request->password
+        ];
+
+        if(Auth::attempt($dados)){
             $success = true;
             $message = 'Usuario logado com sucesso';
         }else{
