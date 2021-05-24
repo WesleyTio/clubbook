@@ -6,25 +6,14 @@
                 <tr>
                     <th scope="col" >Nome</th>
                     <th scope="col" >Autor</th>
-                    <th scope="col" >Alterar</th>
+                    <th scope="col" >Descrição</th>
             </tr>
             </thead>
             <tbody>
-
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <!-- desbilita os botoes caso o usuario listado seja Admin-->
-                            <div>
-
-                                <a class="btn btn-outline-primary" tabindex="-1" role="button" aria-disabled="true"
-                                    href="#">Editar</a>
-                                <a class="btn btn-outline-danger" tabindex="-1" role="button" aria-disabled="true" href="#">Deletar</a>
-
-                            </div>
-                        </td>
+                    <tr v-for="book in books" :key="book.id">
+                        <td>{{book.name}}</td>
+                        <td>{{book.author}}</td>
+                        <td>{{book.description}}</td>
                     </tr>
 
             </tbody>
@@ -36,6 +25,24 @@
 
 <script>
 export default {
+    data(){
+        return{
+            books:[]
+        }
+    },
+    created(){
+        this.$http.get('/sanctum/csrf-cookie')
+            .then(response =>{
+                this.$http.get('/api/lastadd')
+                .then(response =>{
+                    console.log(response.data)
+                    this.books = response.data
+                })
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
 
 }
 </script>

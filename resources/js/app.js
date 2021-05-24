@@ -2,17 +2,11 @@ require('./bootstrap');
 
 import Vue from 'vue'
 import App from './Vue/App.vue'
-import VueRouter from 'vue-router';
-import {routes} from './routes';
+import router from './router'
+
 
 import './axios'
 
-Vue.use(VueRouter);
-
-const router = new VueRouter({
-    mode: 'history',
-    routes: routes
-});
 
 const app = new Vue({
     el: '#app',

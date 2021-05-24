@@ -18,10 +18,11 @@ class BookController extends Controller
     }
 
     public function lastadd(){
-
+        $books = Book::all()->sortByDesc('id');
+        $reverse = $books->values()->take(5);
+        return $reverse;
     }
     public function add(Request $request){
-
         $book = new Book([
             'name' => $request->name,
             'author' => $request->author,

@@ -1,6 +1,5 @@
 <template>
     <div>
-        <Navbar></Navbar>
         <div class="justify-content-center container-fluid my-4 ">
         <Search></Search>
         <ListBooks></ListBooks>
