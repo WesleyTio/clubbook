@@ -13,7 +13,21 @@ import Search from '../components/Search'
 import ListBooks from '../components/ListBooks'
 export default {
 
-    components: { Navbar, Search, ListBooks }
+    components: { Navbar, Search, ListBooks },
+    data(){
+        return{
+            corruentUser: {},
+
+        }
+    },
+    mounted(){
+       axios.get('api/user').then((response) => {
+            this.corruentUser = response.data
+        }).catch((error) => {
+            console.error(error)
+            
+        })
+    }
 
 }
 </script>

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -18,7 +19,7 @@ class UserSeeder extends Seeder
         $dados =[
             'name' =>"José Wesley",
             'email' => "wesleymagnos@hotmail.com",
-            'password' => bcrypt("123456")
+            'password' => Hash::make("123456")
         ];
 
         if(User::where('email','=',$dados['email'])->count()){
@@ -33,7 +34,7 @@ class UserSeeder extends Seeder
         $dados2 =[
             'name' =>"José Tio",
             'email' => "wesleymagnos@gmail.com",
-            'password' => bcrypt("123456")
+            'password' => Hash::make("123456")
 
         ];
 

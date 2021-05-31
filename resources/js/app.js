@@ -1,15 +1,10 @@
 require('./bootstrap');
+require('./axios')
 
-import Vue from 'vue'
+import {createApp} from 'vue'
 import App from './Vue/App.vue'
 import router from './router'
 
-
-import './axios'
-
-
-const app = new Vue({
-    el: '#app',
-    router: router,
-    render: h => h(App),
-});
+const app = createApp(App)
+app.use(router)
+app.mount('#app')

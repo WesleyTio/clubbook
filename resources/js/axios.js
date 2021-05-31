@@ -1,11 +1,9 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios';
 
 axios.defaults.baseURL ='http://localhost:8000/'
+axios.defaults.withCredentials = true;
 
-Vue.use({
-    install(Vue) {
-        Vue.prototype.$http = axios
-    }
-})
+const app = createApp({ });
+app.use(VueAxios, axios)

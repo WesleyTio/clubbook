@@ -31,9 +31,8 @@ export default {
         }
     },
     created(){
-        this.$http.get('/sanctum/csrf-cookie')
-            .then(response =>{
-                this.$http.get('/api/lastadd')
+        axios.get('/sanctum/csrf-cookie').then(response => {
+            axios.get('/api/lastadd')
                 .then(response =>{
                     console.log(response.data)
                     this.books = response.data

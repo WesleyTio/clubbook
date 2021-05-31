@@ -1,16 +1,14 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router';
+
+import {createWebHistory, createRouter} from 'vue-router';
 
 import Login from './Vue/pages/Login.vue'
 import Register from './Vue/pages/Register.vue'
 import Home from './Vue/pages/Home.vue'
 
-Vue.use(VueRouter)
 
-export default new VueRouter({
-    mode: 'history',
-    routes:[{
-            name: 'Home',
+export const routes = [
+        {
+            name: 'home',
             path: '/',
             component: Home
 
@@ -23,5 +21,14 @@ export default new VueRouter({
             name: 'register',
             path: '/register',
             component: Register
-        }]
-})
+        }
+];
+
+
+const router = createRouter({
+    history: createWebHistory(),
+    routes: routes,
+});
+
+export default router;
+

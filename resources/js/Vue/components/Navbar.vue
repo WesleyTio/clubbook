@@ -15,7 +15,6 @@
                         <a href="#" class="nav-link" data-toggle="dropdown">
                             <span class="material-icons align-middle">person</span>
                             <span>{{name}}</span>
-
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item " href="#"> Alterar dados</a>
@@ -23,9 +22,12 @@
                         </div>
                     </li>
                 </ul>
-                <ul class="navbar-nav " v-else>
+                <ul class="navbar-nav" v-else>
                     <li class="nav-item ">
-                        <router-link class="nav-link" to="/login">login</router-link>
+                        <router-link  to="/login">
+                            <a class="nav-link" >Login</a>
+                        </router-link>
+
                     </li>
                     <li class="nav-item ">
                         <router-link class="nav-link" to="/register">Registrar</router-link>

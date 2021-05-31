@@ -3,8 +3,8 @@
     <div>
         <div class="container-fluid d-flex justify-content-center h-100" style="margin-top: 10%">
             <div class="card shadow p-0 mb-3  rounded" style="width: 18rem;">
-                <div class="alert alert-danger" role="alert" v-if="user.error !== null" style="align-self: center;">
-                    {{ user.error }}
+                <div class="alert alert-danger" role="alert" v-if="isError()" style="align-self: center;">
+                    {{ errors.data }}
                 </div>
                 <div class=" card-body d-flex justify-content-center form_container">
                     <form  method="post" >
@@ -51,30 +51,31 @@ export default {
             user: {
                 email: '',
                 password: '',
-                error: null
-
-            }
+            },
+            errors: {}
         }
     },
     methods: {
+        isError(){
+            return Object.values(this.errors).length
+        },
         login(e){
             e.preventDefault()
-            this.$http.get('/sanctum/csrf-cookie').then(response =>{
-                this.$http.post('api/login', {
+            axios.get('/sanctum/csrf-cookie').then(response =>{
+               axios.post('api/login', {
                     email: this.user.email,
                     password: this.user.password
                 })
                 .then(response => {
                     console.log(response.data);
                     if (response.data.success) {
-                        //this.$router.go('/dashboard')
-                    } else {
-                        this.user.error = response.data.message
-                    }
+                        this.$router.push('/')
 
+                    }
                 })
                 .catch(function (error) {
-                    console.error(error);
+                    console.error(error.data);
+                    this.errors = error.response.data.errors;
                 });
             })
         }
