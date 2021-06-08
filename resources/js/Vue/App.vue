@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Navbar></Navbar>
+        <Navbar/>
         <router-view/>
     </div>
 </template>
@@ -8,21 +8,24 @@
 <script>
 
 import Login from './pages/Login.vue'
-import Register from './pages/Register'
-import Home from './pages/Home'
-import Navbar from './components/Navbar'
+import Register from './pages/Register.vue'
+import Home from './pages/Home.vue'
+import Navbar from './components/Navbar.vue'
+
 export default {
-    components: {Login, Register, Home, Navbar},
+    components: { Navbar ,Login, Register, Home },
     data(){
-        return {
-            isLoggedIn: false,
-        }
+
+
+    },
+    methods: {
+
     },
     created() {
-        if (window.Laravel.isLoggedin) {
-            this.isLoggedIn = true
-        }
-    },
+        console.log("created")
+
+    }
+
 
 }
 </script>

@@ -45,6 +45,7 @@
 
 <script>
 
+
 export default {
     data(){
         return {
@@ -68,7 +69,11 @@ export default {
                 })
                 .then(response => {
                     console.log(response.data);
+                    localStorage.setItem('isLoggedIn', true)
+                    localStorage.setItem('user', response.data.user)
                     if (response.data.success) {
+
+                        this.emitter.emit('isLoggedIn', true)
                         this.$router.push('/')
 
                     }
@@ -79,7 +84,8 @@ export default {
                 });
             })
         }
-    }
+    },
+
 
 }
 </script>

@@ -8,25 +8,26 @@
 </template>
 
 <script>
-import Navbar from '../components/Navbar'
+
 import Search from '../components/Search'
 import ListBooks from '../components/ListBooks'
 export default {
 
-    components: { Navbar, Search, ListBooks },
+    components: { Search, ListBooks },
     data(){
         return{
-            corruentUser: {},
 
         }
     },
     mounted(){
-       axios.get('api/user').then((response) => {
-            this.corruentUser = response.data
-        }).catch((error) => {
-            console.error(error)
-            
-        })
+        const logado = localStorage.getItem('isLoggedIn')
+        if( logado === 'true'){
+            axios.get('api/user').then((response) => {
+                this.corruentUser = response.data
+            }).catch((error) => {
+                console.error(error)
+            })
+        }
     }
 
 }
