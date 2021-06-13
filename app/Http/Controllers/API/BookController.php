@@ -17,7 +17,7 @@ class BookController extends Controller
         return array($books);
 
     }
-    
+
 
     public function lastadd(){
         $books = Book::all()->sortByDesc('id');
@@ -36,33 +36,29 @@ class BookController extends Controller
 
     }
 
-    public function edit($id, Request $request){
+    public function edit($id){
 
         $book = Book::find($id);
-        if($request->user_id == $book->fk_users){
-            return response()->json($book);
-        }
-        return response()->json('O livro não pode ser editado por esse usuario');
+        return response()->json($book);
+
+
     }
 
     public function update($id, Request $request){
 
         $book = Book::find($id);
-        if($request->user_id == $book->fk_users){
-            $book->update($request->all());
-            return response()->json("Livro editado com sucesso");
-        }
+        $book->update($request->all());
+        return response()->json("Livro editado com sucesso");
 
 
     }
 
-    public function delete($id, Request $request){
+    public function delete($id){
         $book = Book::find($id);
-        if($request->user_id == $book->fk_users){
-            $book->delete();
-            return response()->json('Livro removido com sucesso');
-        }
-        return response()->json('Livro não pode ser removido por usuario');
+        $book->delete();
+        return response()->json('Livro removido com sucesso');
+
+
     }
 
 }

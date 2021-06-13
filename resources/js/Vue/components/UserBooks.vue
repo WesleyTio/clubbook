@@ -1,7 +1,12 @@
 <template>
   <div id="list" class="row">
+    <div class="col-12 m-2 ">
+        <router-link to="/books/add">
+            <a class="btn btn-outline-success">Adcionar Livro</a>
+        </router-link>
+    </div>
     <div class="table-responsive col-md-12">
-        <table id="tabela_user" class="table table-striped">
+        <table id="tabela_books" class="table table-striped">
             <thead>
                 <tr>
                     <th scope="col" >Nome</th>
@@ -16,9 +21,13 @@
                         <td>{{book.description}}</td>
                         <td>
                             <div>
-                                <a class="btn btn-outline-warning mr-1" tabindex="-1" role="button" aria-disabled="true">Detalhes</a>
-                                <a class="btn btn-outline-primary ml-1 mr-1" tabindex="-1" role="button" aria-disabled="true">Editar</a>
-                                <a class="btn btn-outline-danger ml-1" tabindex="-1" role="button" aria-disabled="true">Deletar</a>
+                                <router-link :to="`/books/${book.id}`">
+                                    <a class="btn btn-outline-warning mr-1" tabindex="-1" role="button" aria-disabled="true">Detalhes</a>
+                                </router-link>
+                                <router-link :to="`/books/${book.id}/editar/true`">
+                                    <a class="btn btn-outline-primary ml-1 mr-1" tabindex="-1" role="button" aria-disabled="true">Editar</a>
+                                </router-link>
+                                <a class="btn btn-outline-danger ml-1" tabindex="-1" role="button" aria-disabled="true" @click="deletar(book.id)">Deletar</a>
 
                             </div>
                         </td>
@@ -50,6 +59,22 @@ export default {
             .catch(function (error) {
                 console.error(error)
             });
+    },
+
+    methods: {
+        deletar(id){
+            axios.get("/sanctum/csrf-cookie").then((response) => {
+                axios.delete(`/api/delete/${id}`)
+                .then((response) => {
+                    console.log(response.data);
+                    this.books.splice(this.books.indexOf(id), 1)
+
+                });
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+        }
     }
 
 }

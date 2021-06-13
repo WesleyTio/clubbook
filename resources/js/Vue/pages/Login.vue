@@ -13,7 +13,7 @@
                                 <span class="input-group-text bg-success text-light">
                                     <i class="material-icons">email</i></span>
                             </div>
-                            <input name="email" class="form-control" id="inputEmail" aria-describedby="emailHelp"
+                            <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp"
                                 v-model="user.email"
                                 placeholder="Email">
                         </div>
