@@ -22,15 +22,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('login', [UserController::class, 'login']);
 Route::post('register', [UserController::class, 'register']);
 Route::post('logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
+Route::get('userbooks/{id}',[UserController::class, 'userbooks'])->name('api.books.userbooks');
 
 Route::get('/lastadd', [BookController::class, 'lastadd'])->name('api.books.lastadd');
 
 Route::middleware('auth:sanctum')->group(function() {
     Route::get('/',[BookController::class, 'index'])->name('api.books');
-    Route::get('add',[BookController::class, 'add'])->name('api.books.add');
+    Route::post('add',[BookController::class, 'add'])->name('api.books.add');
     Route::get('edit/{id}',[BookController::class, 'edit'])->name('api.books.edit');
-    Route::get('update/{id}',[BookController::class, 'update'])->name('api.books.update');
-    Route::get('delete/{id}',[BookController::class, 'delete'])->name('api.books.delete');
+    Route::post('update/{id}',[BookController::class, 'update'])->name('api.books.update');
+    Route::delete('delete/{id}',[BookController::class, 'delete'])->name('api.books.delete');
 });
 
 

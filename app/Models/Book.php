@@ -13,5 +13,6 @@ class Book extends Model
         'name',
         'author',
         'description',
+        'fk_users'
     ];
 }

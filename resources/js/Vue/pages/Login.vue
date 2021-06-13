@@ -71,6 +71,7 @@ export default {
                     console.log(response.data);
                     localStorage.setItem('isLoggedIn', true)
                     localStorage.setItem('user', response.data.user)
+                    localStorage.setItem('userId', response.data.userId)
                     if (response.data.success) {
 
                         this.emitter.emit('isLoggedIn', true)

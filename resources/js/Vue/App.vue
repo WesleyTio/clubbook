@@ -21,10 +21,7 @@ export default {
     methods: {
 
     },
-    created() {
-        console.log("created")
-
-    }
+    
 
 
 }

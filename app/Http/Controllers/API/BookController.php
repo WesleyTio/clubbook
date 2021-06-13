@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Book;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 
@@ -16,6 +17,7 @@ class BookController extends Controller
         return array($books);
 
     }
+    
 
     public function lastadd(){
         $books = Book::all()->sortByDesc('id');

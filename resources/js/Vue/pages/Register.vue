@@ -1,8 +1,8 @@
 <template>
     <div class="container-fluid d-flex justify-content-center h-100" style="margin-top: 10%" >
       <div class="card-body d-flex justify-content-center">
-        <div class="alert alert-danger" role="alert" v-if="user.error !== null" style="align-self: center;">
-                {{ user.error }}
+        <div class="alert alert-danger" role="alert" v-if="errors != null" style="align-self: center;">
+                {{ errors }}
         </div>
         <form  method="POST" autocomplete="on" >
             <div class="form-group">
@@ -41,14 +41,14 @@ export default {
                 email: '',
                 password: '',
             },
-            errors: {}
+            errors: null
         }
     },
     methods: {
         register(e){
             e.preventDefault()
-            this.$http.get('/sanctum/csrf-cookie').then(response =>{
-                this.$http.post('api/register', {
+            axios.get('/sanctum/csrf-cookie').then(response =>{
+                axios.post('api/register', {
                     name: this.user.name,
                     email: this.user.email,
                     password: this.user.password
@@ -56,7 +56,9 @@ export default {
                 .then(response => {
                     console.log(response.data);
                     if (response.data.success) {
-                        //this.$router.go('/login')
+                        this.$router.push('/login')
+                    }else{
+                        this.errors = response.data.message
                     }
 
                 })

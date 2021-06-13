@@ -28,7 +28,7 @@ class UserController extends Controller
 
         } catch(QueryException $error){
             $success = false;
-            $message = $error->getMessage();
+            $message = 'email já cadastrado';
 
         }
 
@@ -58,6 +58,7 @@ class UserController extends Controller
 
         $response = [
             'user'    => Auth::user()->name,
+            'userId'  => Auth::user()->id,
             'success' => $success,
             'message' => $message,
         ];
@@ -81,6 +82,13 @@ class UserController extends Controller
             'message' => $message,
         ];
         return response()->json($response);
+
+    }
+    public function userbooks($id){
+
+        $books = User::find($id)->books;
+
+        return response()->json($books);
 
     }
 }

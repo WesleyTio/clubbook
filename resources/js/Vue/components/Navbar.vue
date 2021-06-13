@@ -9,7 +9,10 @@
             <div class="collapse navbar-collapse" id="collapsibleNavId">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0" v-if="isLoggedIn">
                     <li class="nav-item">
-                        <router-link class="nav-link" to="/books">Livros</router-link>
+                        <router-link class="nav-link" to="/books">Meus livros</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link" to="/">Reservar livro</router-link>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="#" id="navbarScrollingDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
@@ -50,15 +53,12 @@ export default {
         }
     },
     created() {
-
-    },
-    mounted(){
         this.emitter.on('isLoggedIn', isLoggedIn => {
-            console.log("foi ouvido")
             this.isLoggedIn = true
+            this.name = localStorage.getItem('user')
             //
         })
-        this.name = localStorage.getItem('user')
+
     },
     methods: {
         logout(){
@@ -69,7 +69,9 @@ export default {
                         console.log(response)
                         localStorage.removeItem('isLoggedIn')
                         localStorage.removeItem('user')
+                        localStorage.removeItem('userId')
                         this.isLoggedIn = false
+                        this.name = null
                         this.$router.replace('/')
                     } else {
                         console.log(response)
@@ -81,9 +83,6 @@ export default {
             })
 
         }
-    },
-    beforeRouteEnter(to, from, next) {
-
     }
 
 }
