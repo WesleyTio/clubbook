@@ -41,27 +41,31 @@
             </div>
         </div>
         <div id="reservation" v-if="!editing">
-
+            <ListBookReservation v-bind:reservations="reservations" />
         </div>
     </div>
 </template>
 
 <script>
+import ListBookReservation from './ListBookReservation.vue'
 export default {
     props: ["id", "edit"],
+    components: { ListBookReservation },
     data() {
         return {
             editing: false,
             book: [],
+            reservations: []
         };
     },
     created() {
+        if (this.edit === "true") {
+            this.editing = true;
+        }
         axios.get("/sanctum/csrf-cookie").then((response) => {
                 axios.get(`/api/edit/${this.id}`).then((response) => {
                     console.log(response.data);
-                    if (this.edit === "true") {
-                        this.editing = true;
-                    }
+
                     this.book = response.data;
                 });
             })
@@ -69,6 +73,15 @@ export default {
                 console.error(error);
             });
         if (!this.editing) {
+            axios.get("/sanctum/csrf-cookie").then((response) => {
+                axios.get(`/api/reservations/${this.id}`).then((response) => {
+                    console.log(response.data);
+                    this.reservations = response.data;
+                });
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
         }
     },
     methods:{

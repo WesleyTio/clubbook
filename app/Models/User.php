@@ -46,4 +46,8 @@ class User extends Authenticatable
 
         return $this->hasmany(Book::class, 'fk_users');
     }
+    public function reservations(){
+        
+        return $this->belongsToMany(Book::class, 'reservations', 'fk_user_reservation','fk_book_reservation' )->withPivot('date_reservation', 'date_devolution');
+    }
 }

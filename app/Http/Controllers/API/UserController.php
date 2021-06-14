@@ -86,9 +86,25 @@ class UserController extends Controller
     }
     public function userbooks($id){
 
-        $books = User::find($id)->books;
+        $user = User::find($id);
+        $list_books = array();
 
-        return response()->json($books);
+        foreach($user->books as $book){
+            $item = array('id' => $book->id, 'name' => $book->name, 'author' => $book->author, 'description' => $book->description);
+            array_push($list_books, $item);
+        }
+        return response()->json($list_books);
 
+    }
+    public function userReservations($id){
+
+        $user = User::find($id);
+        $list_reservations = array();
+
+        foreach($user->reservations as $reservation){
+            $item = array('id' => $reservation->id , 'name' => $reservation->name, 'date_reservation' => $reservation->pivot->date_reservation, 'date_devolution' => $reservation->pivot->date_devolution);
+            array_push($list_reservations, $item);
+        }
+        return response()->json($list_reservations);
     }
 }

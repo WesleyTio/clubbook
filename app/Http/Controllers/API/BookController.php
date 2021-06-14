@@ -60,5 +60,20 @@ class BookController extends Controller
 
 
     }
+    public function reservations($id){
+        $book = Book::find($id);
+
+        $list_reservation = array();
+
+        foreach($book->reservationsBook as $reservation){
+
+            $item= array('name' => $reservation->name, 'date_reservation' => $reservation->pivot->date_reservation, 'date_devolution' => $reservation->pivot->date_devolution);
+
+            array_push($list_reservation, $item);
+        }
+        
+        return response()->json($list_reservation);
+
+    }
 
 }
