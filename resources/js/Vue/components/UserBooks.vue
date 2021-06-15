@@ -63,11 +63,14 @@ export default {
 
     methods: {
         deletar(id){
+
             axios.get("/sanctum/csrf-cookie").then((response) => {
                 axios.delete(`/api/delete/${id}`)
                 .then((response) => {
                     console.log(response.data);
-                    this.books.splice(this.books.indexOf(id), 1)
+                    console.log(this.books);
+                    const result = this.books.find(book => book.id === id);
+                    this.books.splice(this.books.indexOf(result), 1)
 
                 });
             })
