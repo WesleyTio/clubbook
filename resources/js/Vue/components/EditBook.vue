@@ -73,11 +73,11 @@
                 <form class="form-inline">
                     <div class="form-group m-2">
                         <label> Reservado: </label>
-                        <input type="date" class="form-control ml-1" />
+                        <input type="date" class="form-control ml-1" v-model="reservationDate" />
                     </div>
                     <div class="form-group m-2">
                         <label>Devolvido: </label>
-                        <input type="date" class="form-control ml-1" />
+                        <input type="date" class="form-control ml-1" v-model="devolutionDate" />
                     </div>
 
                     <button class="btn btn-outline-success m-1">
@@ -86,6 +86,7 @@
                     <button class="btn btn-outline-danger m-1" @click="reservation = !reservation">
                         Canlelar
                     </button>
+                    <p>resultado: {{period}}</p>
                 </form>
             </div>
             <div id="menssage" v-show="menssage">
@@ -111,6 +112,8 @@ export default {
             menssage: false,
             book: [],
             reservations: [],
+            reservationDate: '',
+            devolutionDate: ''
         };
     },
     created() {
@@ -167,6 +170,16 @@ export default {
                 });
         },
     },
+    computed: {
+        period(){
+            const dateR = new Date(this.reservationDate)
+            const dateD = new Date(this.devolutionDate)
+            const timeMilisegundo = dateD - dateR
+            const timeDays = Math.ceil(timeMilisegundo/(1000 * 60 * 60 * 24))
+            console.log(timeDays);
+            return timeDays
+        }
+    }
 };
 </script>
 
