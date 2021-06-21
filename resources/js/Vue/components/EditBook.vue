@@ -66,27 +66,43 @@
             </div>
         </div>
         <div id="reservation" class="m-2" v-if="!editing">
-            <button class="btn btn-outline-info" v-if="!reservation" @click="reservation = !reservation">
+            <button
+                class="btn btn-outline-info"
+                v-if="!reservation"
+                @click="busyReservation"
+            >
                 Reservar livro
             </button>
             <div class="row" v-if="reservation">
                 <form class="form-inline">
                     <div class="form-group m-2">
                         <label> Reservado: </label>
-                        <input type="date" class="form-control ml-1" v-model="reservationDate" />
+                        <input
+                            type="date"
+                            class="form-control ml-1"
+                            v-model="reservationDate"
+
+                        />
                     </div>
                     <div class="form-group m-2">
                         <label>Devolvido: </label>
-                        <input type="date" class="form-control ml-1" v-model="devolutionDate" />
+                        <input
+                            type="date"
+                            class="form-control ml-1"
+                            v-model="devolutionDate"
+                        />
                     </div>
 
                     <button class="btn btn-outline-success m-1">
                         Salvar reserva
                     </button>
-                    <button class="btn btn-outline-danger m-1" @click="reservation = !reservation">
+                    <button
+                        class="btn btn-outline-danger m-1"
+                        @click="reservation = !reservation"
+                    >
                         Canlelar
                     </button>
-                    <p>resultado: {{period}}</p>
+                    <p>resultado: {{ period }}</p>
                 </form>
             </div>
             <div id="menssage" v-show="menssage">
@@ -112,11 +128,14 @@ export default {
             menssage: false,
             book: [],
             reservations: [],
-            reservationDate: '',
-            devolutionDate: ''
+            busyReservations: [],
+            reservationDate: "",
+            devolutionDate: "",
+            toDay: 0
         };
     },
     created() {
+
         if (this.edit === "true") {
             this.editing = true;
         }
@@ -125,8 +144,8 @@ export default {
             .then((response) => {
                 axios.get(`/api/edit/${this.id}`).then((response) => {
                     console.log(response.data);
-
                     this.book = response.data;
+                    this.getToDay()
                 });
             })
             .catch(function (error) {
@@ -169,17 +188,43 @@ export default {
                     console.error(error);
                 });
         },
+        getToDay() {
+            const data = new Date();
+            /*var dia = String(data.getDate())
+            const diaF = (dia.length == 1) ? '0'+dia : dia
+            var mes = String(data.getMonth() + 1)
+            const mesF = (mes.length == 1) ? '0'+mes : mes
+            var ano = data.getFullYear();
+            this.toDay = diaF + "/" + mesF + "/" + ano;*/
+            this.toDay = data.getTime()
+        },
+        busyReservation(){
+            this.reservation = !this.reservation
+            const listBusyReservation = this.reservations.filter(reservation =>{
+                const devolution = new Date(reservation.date_devolution);
+                return devolution.getTime() >= this.toDay
+            });
+            this.busyReservations = listBusyReservation
+            console.log(this.busyReservations)
+        }
     },
     computed: {
-        period(){
-            const dateR = new Date(this.reservationDate)
-            const dateD = new Date(this.devolutionDate)
-            const timeMilisegundo = dateD - dateR
-            const timeDays = Math.ceil(timeMilisegundo/(1000 * 60 * 60 * 24))
+        period() {
+            const dateR = new Date(this.reservationDate);
+            const dateD = new Date(this.devolutionDate);
+            const timeMilisegundo = dateD - dateR;
+            const timeDays = Math.ceil(timeMilisegundo / (1000 * 60 * 60 * 24));
             console.log(timeDays);
-            return timeDays
-        }
-    }
+            if (timeDays > 5) {
+                return "vai pra lá";
+            } else if (timeDays < 0) {
+                return "praque isso mesmo";
+            } else {
+                // verificar reserva está disponível
+                return timeDays;
+            }
+        },
+    },
 };
 </script>
 
