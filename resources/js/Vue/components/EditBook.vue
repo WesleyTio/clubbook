@@ -206,6 +206,24 @@ export default {
             });
             this.busyReservations = listBusyReservation
             console.log(this.busyReservations)
+        },
+        validateReservation(dateR, dateD){
+            let validate = true
+            this.busyReservations.forEach((reservation)=> {
+                const devolution = new Date(reservation.date_devolution);
+                const reservationDate = new Date(reservation.date_reservation);
+                if(dateR  < devolution.getTime()){
+                    if(dateD > reservationDate.getTime()){
+                        console.log('segund0 if')
+                        validate = false;
+                    }else{
+                        console.log('else')
+                        validate = true
+                    }
+                }
+            })
+            return validate;
+
         }
     },
     computed: {
@@ -216,12 +234,15 @@ export default {
             const timeDays = Math.ceil(timeMilisegundo / (1000 * 60 * 60 * 24));
             console.log(timeDays);
             if (timeDays > 5) {
-                return "vai pra lá";
-            } else if (timeDays < 0) {
-                return "praque isso mesmo";
+                alert('OPS! Não podemos fazer reservas acima de 5 dias ')
+            } else if (this.toDay > dateR.getTime() || this.toDay > dateD.getTime()) {
+                alert('Data inválida!!!')
             } else {
-                // verificar reserva está disponível
-                return timeDays;
+                let validateDate = this.validateReservation(dateR.getTime(), dateD.getTime())
+                if(!validateDate){
+                    alert('O livro não pode ser reservado na data informada consulte a lista de reservas!')
+                }
+                
             }
         },
     },
