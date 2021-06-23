@@ -69,6 +69,8 @@ export default {
                 })
                 .then(response => {
                     console.log(response.data);
+                    const data = new Date();
+                    localStorage.setItem('toDay', data.getTime())
                     localStorage.setItem('isLoggedIn', true)
                     localStorage.setItem('user', response.data.user)
                     localStorage.setItem('userId', response.data.userId)

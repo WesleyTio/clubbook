@@ -2,18 +2,18 @@
     <div>
         <div class="justify-content-center container-fluid my-4 ">
         <Search></Search>
-        <ListBooks></ListBooks>
+        <ListLastBooks></ListLastBooks>
         </div>
     </div>
 </template>
 
 <script>
 
-import Search from '../components/Search'
-import ListBooks from '../components/ListBooks'
+import Search from '../components/Search.vue'
+import ListLastBooks from '../components/ListLastBooks.vue'
 export default {
 
-    components: { Search, ListBooks },
+    components: { Search, ListLastBooks },
     data(){
         return{
 
