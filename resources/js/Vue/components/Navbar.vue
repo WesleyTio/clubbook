@@ -53,6 +53,10 @@ export default {
         }
     },
     created() {
+        if(localStorage.getItem('isLoggedIn')){
+            this.isLoggedIn = true
+            this.name = localStorage.getItem('user')
+        }
         this.emitter.on('isLoggedIn', isLoggedIn => {
             this.isLoggedIn = true
             this.name = localStorage.getItem('user')
