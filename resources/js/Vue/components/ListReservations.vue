@@ -1,5 +1,5 @@
 <template>
-  <div id="list" class="row">
+    <div id="list" class="row">
         <div class="table-responsive col-md-12">
             <table id="tabela_reservation" class="table table-striped">
                 <thead>

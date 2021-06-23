@@ -55,6 +55,7 @@ class BookController extends Controller
 
     public function delete($id){
         $book = Book::find($id);
+        // verificar se existe uma reserva associada
         $book->delete();
         return response()->json('Livro removido com sucesso');
 
@@ -71,9 +72,12 @@ class BookController extends Controller
 
             array_push($list_reservation, $item);
         }
-        
+
         return response()->json($list_reservation);
 
     }
+    // receber o id do user
+    // listar todos o livros reservados por ele nos ultimos 30 dias
+    // se livro tiver sido reservado a mais de 30 dias esta disponivel novamente
 
 }

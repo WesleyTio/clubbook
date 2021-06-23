@@ -21,10 +21,10 @@
                         <td>{{book.description}}</td>
                         <td>
                             <div>
-                                <router-link :to="`/books/${book.id}`">
+                                <router-link :to="`/mybooks/${book.id}`">
                                     <a class="btn btn-outline-warning mr-1" tabindex="-1" role="button" aria-disabled="true">Detalhes</a>
                                 </router-link>
-                                <router-link :to="`/books/${book.id}/editar/true`">
+                                <router-link :to="`/mybooks/${book.id}/editar/true`">
                                     <a class="btn btn-outline-primary ml-1 mr-1" tabindex="-1" role="button" aria-disabled="true">Editar</a>
                                 </router-link>
                                 <a class="btn btn-outline-danger ml-1" tabindex="-1" role="button" aria-disabled="true" @click="deletar(book.id)">Deletar</a>

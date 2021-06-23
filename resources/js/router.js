@@ -8,6 +8,8 @@ import Books from './Vue/pages/books.vue'
 import UserBooks from './Vue/components/UserBooks.vue'
 import EditBook from './Vue/components/EditBook.vue'
 import AddBook from './Vue/components/AddBook.vue'
+import Reservations from './Vue/pages/Reservations.vue'
+import UserReservations from './Vue/components/UserReservations.vue'
 
 
 export const routes = [
@@ -26,8 +28,8 @@ export const routes = [
             path: '/register',
             component: Register
         },{
-            name: 'books',
-            path: '/books',
+            name: 'mybooks',
+            path: '/mybooks',
             component: Books,
             props: true,
             children: [
@@ -36,7 +38,18 @@ export const routes = [
                 { path: ':id', component: EditBook, props: true},
                 { path: ':id/editar/:edit', component: EditBook, props: true}
             ]
-        },
+        },{
+            name: 'myreservations',
+            path: '/myreservations',
+            component: Reservations,
+            props: true,
+            children: [
+                { path: '', component: UserReservations, props: true},
+                { path: '', component: UserBooks, props: true},
+                { path: '', component: UserBooks, props: true},
+            ]
+
+        }
 
 ];
 

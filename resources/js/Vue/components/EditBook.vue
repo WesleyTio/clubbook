@@ -102,7 +102,7 @@
                     >
                         Canlelar
                     </button>
-                    <p>resultado: {{ period }}</p>
+                    <p>{{ period }}</p>
                 </form>
             </div>
             <div id="menssage" v-show="menssage">
@@ -145,7 +145,7 @@ export default {
                 axios.get(`/api/edit/${this.id}`).then((response) => {
                     console.log(response.data);
                     this.book = response.data;
-                    this.getToDay()
+                    this.toDay = localStorage.getItem('toDay')
                 });
             })
             .catch(function (error) {
@@ -188,16 +188,6 @@ export default {
                     console.error(error);
                 });
         },
-        getToDay() {
-            const data = new Date();
-            /*var dia = String(data.getDate())
-            const diaF = (dia.length == 1) ? '0'+dia : dia
-            var mes = String(data.getMonth() + 1)
-            const mesF = (mes.length == 1) ? '0'+mes : mes
-            var ano = data.getFullYear();
-            this.toDay = diaF + "/" + mesF + "/" + ano;*/
-            this.toDay = data.getTime()
-        },
         busyReservation(){
             this.reservation = !this.reservation
             const listBusyReservation = this.reservations.filter(reservation =>{
@@ -233,16 +223,22 @@ export default {
             const timeMilisegundo = dateD - dateR;
             const timeDays = Math.ceil(timeMilisegundo / (1000 * 60 * 60 * 24));
             console.log(timeDays);
-            if (timeDays > 5) {
-                alert('OPS! Não podemos fazer reservas acima de 5 dias ')
-            } else if (this.toDay > dateR.getTime() || this.toDay > dateD.getTime()) {
+            if (this.toDay > dateR.getTime() || this.toDay > dateD.getTime()) {
                 alert('Data inválida!!!')
+                this.reservationDate = ''
+                this.devolutionDate = ''
+            }else if (timeDays > 5) {
+                alert('OPS! Não podemos fazer reservas acima de 5 dias ')
+                this.reservationDate = ''
+                this.devolutionDate = ''
             } else {
                 let validateDate = this.validateReservation(dateR.getTime(), dateD.getTime())
                 if(!validateDate){
                     alert('O livro não pode ser reservado na data informada consulte a lista de reservas!')
+                    this.reservationDate = ''
+                    this.devolutionDate = ''
                 }
-                
+
             }
         },
     },

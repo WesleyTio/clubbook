@@ -18,8 +18,8 @@ class ReservationSeeder extends Seeder
         $dadosReserva = [
             'fk_user_reservation' => 1,
             'fk_book_reservation' => 1,
-            'date_reservation' => "15/06/21",
-            'date_devolution' => "19/06/21"
+            'date_reservation' => "2021-06-24",
+            'date_devolution' => "2021-06-27"
         ];
         Reservation::create($dadosReserva);
         echo "Reserva do livro 1 criada \n";

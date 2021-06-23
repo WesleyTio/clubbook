@@ -9,10 +9,10 @@
             <div class="collapse navbar-collapse" id="collapsibleNavId">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0" v-if="isLoggedIn">
                     <li class="nav-item">
-                        <router-link class="nav-link" to="/books">Meus livros</router-link>
+                        <router-link class="nav-link" to="/mybooks">Meus livros</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" to="/">Reservar livro</router-link>
+                        <router-link class="nav-link" to="/myreservations">Reservar livro</router-link>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="#" id="navbarScrollingDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
