@@ -82,8 +82,5 @@ class BookController extends Controller
 
 
     }
-    // receber o id do user
-    // listar todos o livros reservados por ele nos ultimos 30 dias
-    // se livro tiver sido reservado a mais de 30 dias esta disponivel novamente
 
 }

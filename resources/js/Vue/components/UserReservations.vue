@@ -5,7 +5,7 @@
         </div>
         <span style="background-attachment: fixed;"></span>
         <div id="ListBooks">
-
+            <ListBooks v-bind:books="availableBooks"/>
         </div>
 
     </div>
@@ -38,7 +38,16 @@ export default {
             .catch(function (error) {
                 console.error(error);
             });
-        
+        axios.get('/sanctum/csrf-cookie').then(response => {
+            axios.get(`/api/availableBooks/${id}`)
+                .then(response =>{
+                    console.log(response.data)
+                    this.availableBooks = response.data
+                })
+            })
+            .catch(function (error) {
+                console.error(error)
+            });
     }
 
 }

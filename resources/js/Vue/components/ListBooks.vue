@@ -1,10 +1,5 @@
 <template>
   <div id="list" class="row">
-    <div class="col-12 m-2 ">
-        <router-link to="/books/add">
-            <a class="btn btn-outline-success">Adcionar Livro</a>
-        </router-link>
-    </div>
     <div class="table-responsive col-md-12">
         <table id="tabela_books" class="table table-striped">
             <thead>
@@ -22,7 +17,7 @@
                         <td>
                             <div>
                                 <router-link :to="`/books/${book.id}`">
-                                    <a class="btn btn-outline-warning mr-1" tabindex="-1" role="button" aria-disabled="true">Reservar livro</a>
+                                    <a class="btn btn-outline-warning mr-1" tabindex="-1" role="button" aria-disabled="true">Detalhes</a>
                                 </router-link>
                             </div>
                         </td>
@@ -37,22 +32,16 @@
 
 <script>
 export default {
+    props:{
+        books: Array
+    },
     data(){
         return{
-            books:[]
+
         }
     },
     created(){
-        axios.get('/sanctum/csrf-cookie').then(response => {
-            axios.get(`/api/`)
-                .then(response =>{
-                    console.log(response.data)
-                    this.books = response.data
-                })
-            })
-            .catch(function (error) {
-                console.error(error)
-            });
+
     },
 
     methods: {
