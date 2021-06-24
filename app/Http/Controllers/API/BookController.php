@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Book;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 
@@ -62,18 +61,25 @@ class BookController extends Controller
 
     }
     public function reservations($id){
+
+        $dateToday = date_create();
         $book = Book::find($id);
 
         $list_reservation = array();
 
         foreach($book->reservationsBook as $reservation){
 
-            $item= array('name' => $reservation->name, 'date_reservation' => $reservation->pivot->date_reservation, 'date_devolution' => $reservation->pivot->date_devolution);
+            $date_devolution = date_create($reservation->pivot->date_devolution);
+            if($dateToday < $date_devolution){
 
-            array_push($list_reservation, $item);
+                $item= array('name' => $reservation->name, 'date_reservation' => $reservation->pivot->date_reservation, 'date_devolution' => $reservation->pivot->date_devolution);
+                array_push($list_reservation, $item);
+            }
         }
 
         return response()->json($list_reservation);
+
+
 
     }
     // receber o id do user

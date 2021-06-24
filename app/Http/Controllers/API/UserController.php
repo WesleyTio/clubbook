@@ -97,13 +97,20 @@ class UserController extends Controller
 
     }
     public function userReservations($id){
+        $dateToday = date_create();
 
         $user = User::find($id);
         $list_reservations = array();
 
         foreach($user->reservations as $reservation){
-            $item = array('id' => $reservation->id , 'name' => $reservation->name, 'date_reservation' => $reservation->pivot->date_reservation, 'date_devolution' => $reservation->pivot->date_devolution);
-            array_push($list_reservations, $item);
+
+            $date_devolution = date_create($reservation->pivot->date_devolution);
+            if($dateToday < $date_devolution){
+
+                $item = array('id' => $reservation->id , 'name' => $reservation->name, 'date_reservation' => $reservation->pivot->date_reservation, 'date_devolution' => $reservation->pivot->date_devolution);
+                array_push($list_reservations, $item);
+            }
+
         }
         return response()->json($list_reservations);
     }
