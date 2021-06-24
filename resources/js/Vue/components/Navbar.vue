@@ -56,7 +56,13 @@ export default {
         if(localStorage.getItem('isLoggedIn')){
             this.isLoggedIn = true
             this.name = localStorage.getItem('user')
+        }else {
+            localStorage.removeItem('isLoggedIn')
+            localStorage.removeItem('user')
+            localStorage.removeItem('userId')
+            this.isLoggedIn = false
         }
+
         this.emitter.on('isLoggedIn', isLoggedIn => {
             this.isLoggedIn = true
             this.name = localStorage.getItem('user')

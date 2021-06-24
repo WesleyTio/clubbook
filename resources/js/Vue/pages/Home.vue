@@ -25,6 +25,8 @@ export default {
             axios.get('api/user').then((response) => {
                 this.corruentUser = response.data
             }).catch((error) => {
+                this.emitter.emit('isLoggedIn', false)
+                this.$router.push('/login')
                 console.error(error)
             })
         }
