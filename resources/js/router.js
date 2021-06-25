@@ -5,10 +5,10 @@ import Login from './Vue/pages/Login.vue'
 import Register from './Vue/pages/Register.vue'
 import Home from './Vue/pages/Home.vue'
 import Books from './Vue/pages/books.vue'
+import Reservations from './Vue/pages/Reservations.vue'
 import UserBooks from './Vue/components/UserBooks.vue'
 import EditBook from './Vue/components/EditBook.vue'
 import AddBook from './Vue/components/AddBook.vue'
-import Reservations from './Vue/pages/Reservations.vue'
 import UserReservations from './Vue/components/UserReservations.vue'
 
 
@@ -45,8 +45,7 @@ export const routes = [
             props: true,
             children: [
                 { path: '', component: UserReservations, props: true},
-                { path: '', component: UserBooks, props: true},
-                { path: '', component: UserBooks, props: true},
+                { path: ':id', component: EditBook, props: true},
             ]
 
         }

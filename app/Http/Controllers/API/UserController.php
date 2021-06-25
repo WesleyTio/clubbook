@@ -138,11 +138,12 @@ class UserController extends Controller
     }
     public function availableBooks($id){
         $books = Book::all()->toArray();
+       
         $books_available = $books;
         $list_books_reservation = $this->userListReservation($id);
         foreach( $list_books_reservation as $book_id){
            foreach($books as $book){
-              if($book->id === $book_id){
+              if($book['id'] === $book_id){
                 $key = array_search($book, $books_available);
                 unset($books_available[$key]);
               }

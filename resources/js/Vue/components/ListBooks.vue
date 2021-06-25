@@ -16,7 +16,7 @@
                         <td>{{book.description}}</td>
                         <td>
                             <div>
-                                <router-link :to="`/books/${book.id}`">
+                                <router-link :to="`/myreservations/${book.id}`">
                                     <a class="btn btn-outline-warning mr-1" tabindex="-1" role="button" aria-disabled="true">Detalhes</a>
                                 </router-link>
                             </div>

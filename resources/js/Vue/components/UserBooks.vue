@@ -1,7 +1,7 @@
 <template>
   <div id="list" class="row">
     <div class="col-12 m-2 ">
-        <router-link to="/books/add">
+        <router-link to="/mybooks/add">
             <a class="btn btn-outline-success">Adcionar Livro</a>
         </router-link>
     </div>

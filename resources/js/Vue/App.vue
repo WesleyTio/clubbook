@@ -15,13 +15,15 @@ import Navbar from './components/Navbar.vue'
 export default {
     components: { Navbar ,Login, Register, Home },
     data(){
-
+        return{
+            
+        }
 
     },
     methods: {
 
     },
-    
+
 
 
 }

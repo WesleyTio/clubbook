@@ -12,13 +12,7 @@
 import Search from '../components/Search.vue'
 import ListLastBooks from '../components/ListLastBooks.vue'
 export default {
-
     components: { Search, ListLastBooks },
-    data(){
-        return{
-
-        }
-    },
     mounted(){
         const logado = localStorage.getItem('isLoggedIn')
         if( logado === 'true'){

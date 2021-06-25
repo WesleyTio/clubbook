@@ -16,7 +16,7 @@
                     </div>
                     <div class="form-group">
                         <label>Descrição:</label>
-                        <textarea type="text"  class="form-control" v-model="description"/>
+                        <textarea type="text"  class="form-control" v-model="description" placeholder="Este livro conta..."/>
                     </div>
                     <button type="submit" class="btn btn-success " style="width: 20%;" @click="save"> Salvar </button>
                 </form>

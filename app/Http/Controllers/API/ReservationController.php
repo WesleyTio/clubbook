@@ -31,10 +31,10 @@ class ReservationController extends Controller
      */
     public function add(Request $request)
     {
-        //
+
         $reservation = new Reservation([
             'fk_user_reservation' => $request->fk_user_reservation,
-            'fk_book_reservation' => $request->fk_user_reservation,
+            'fk_book_reservation' => $request->fk_book_reservation,
             'date_reservation' => $request->date_reservation,
             'date_devolution' => $request->date_devolution,
 

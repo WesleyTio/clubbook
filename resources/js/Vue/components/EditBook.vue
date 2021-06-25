@@ -69,12 +69,12 @@
             <button
                 class="btn btn-outline-info"
                 v-if="!reservation"
-                @click="busyReservation"
+                @click="reservation = !reservation"
             >
                 Reservar livro
             </button>
             <div class="row" v-if="reservation">
-                <form class="form-inline">
+                <form method="POST"  class="form-inline">
                     <div class="form-group m-2">
                         <label> Reservado: </label>
                         <input
@@ -93,7 +93,10 @@
                         />
                     </div>
 
-                    <button class="btn btn-outline-success m-1">
+                    <button class="btn btn-outline-success m-1"
+                            type="submit"
+                            @click="saveReservation"
+                    >
                         Salvar reserva
                     </button>
                     <button
@@ -128,7 +131,6 @@ export default {
             menssage: false,
             book: [],
             reservations: [],
-            busyReservations: [],
             reservationDate: "",
             devolutionDate: "",
             toDay: 0
@@ -188,27 +190,39 @@ export default {
                     console.error(error);
                 });
         },
-        busyReservation(){
-            this.reservation = !this.reservation
-            const listBusyReservation = this.reservations.filter(reservation =>{
-                const devolution = new Date(reservation.date_devolution);
-                return devolution.getTime() >= this.toDay
-            });
-            this.busyReservations = listBusyReservation
-            console.log(this.busyReservations)
+        saveReservation(e){
+            const userId = localStorage.getItem('userId')
+            e.preventDefault(),
+
+            axios
+                .get("/sanctum/csrf-cookie")
+                .then((response) => {
+                    axios
+                        .post(`/api/reservation`, {
+                            fk_user_reservation: userId,
+                            fk_book_reservation: this.id,
+                            date_reservation: this.reservationDate,
+                            date_devolution: this.devolutionDate
+                        })
+                        .then((response) => {
+                            console.log(response.data);
+                            //this.$router.go(-1);
+                        });
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+
         },
         validateReservation(dateR, dateD){
             let validate = true
-            this.busyReservations.forEach((reservation)=> {
+            this.reservations.forEach((reservation)=> {
                 const devolution = new Date(reservation.date_devolution);
                 const reservationDate = new Date(reservation.date_reservation);
                 if(dateR  < devolution.getTime()){
                     if(dateD > reservationDate.getTime()){
                         console.log('segund0 if')
                         validate = false;
-                    }else{
-                        console.log('else')
-                        validate = true
                     }
                 }
             })
@@ -230,7 +244,6 @@ export default {
             }else if (timeDays > 5) {
                 alert('OPS! Não podemos fazer reservas acima de 5 dias ')
                 this.reservationDate = ''
-                this.devolutionDate = ''
             } else {
                 let validateDate = this.validateReservation(dateR.getTime(), dateD.getTime())
                 if(!validateDate){
