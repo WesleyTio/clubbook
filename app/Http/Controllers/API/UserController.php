@@ -4,14 +4,13 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Book;
+use App\Models\Reservation;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-use PhpParser\Node\Stmt\TryCatch;
-use SebastianBergmann\Environment\Console;
 
 class UserController extends Controller
 {
@@ -138,7 +137,7 @@ class UserController extends Controller
     }
     public function availableBooks($id){
         $books = Book::all()->toArray();
-       
+
         $books_available = $books;
         $list_books_reservation = $this->userListReservation($id);
         foreach( $list_books_reservation as $book_id){
@@ -153,5 +152,61 @@ class UserController extends Controller
         // receber o id do user
         // listar todos o livros reservados por ele nos ultimos 30 dias
         // se livro tiver sido reservado a mais de 30 dias esta disponivel novamente
+    }
+    private function listBooksReservation($id){
+        $dateToday = date_create();
+
+        $user = User::find($id);
+        $list_reservations = array();
+        foreach($user->reservations as $reservation){
+
+            $date_devolution = date_create($reservation->pivot->date_devolution);
+            if($dateToday < $date_devolution){
+                $item = array('date_reservation' => $reservation->pivot->date_reservation, 'date_devolution' => $reservation->pivot->date_devolution);
+                array_push($list_reservations, $item);
+
+            }
+        }
+        return $list_reservations;
+    }
+    public function validateReservation(Request $request){
+
+        $list_books_reservations = $this->listBooksReservation($request->fk_user_reservation);
+        $dateR = date_create($request->date_reservation);
+        $dateD = date_create($request->date_devolution);
+        $validate = true;
+        foreach($list_books_reservations as $reservation){
+            $date_devolution = date_create($reservation['date_devolution']);
+            $date_reservation = date_create($reservation['date_reservation']);
+            if($dateR < $date_devolution){
+                if($dateD > $date_reservation){
+                    $validate = false;
+                }
+            }
+        }
+        if($validate){
+            $reservation = new Reservation([
+                'fk_user_reservation' => $request->fk_user_reservation,
+                'fk_book_reservation' => $request->fk_book_reservation,
+                'date_reservation' => $request->date_reservation,
+                'date_devolution' => $request->date_devolution,
+
+            ]);
+            $reservation->save();
+            $success = true;
+            $message = 'Reserva realizada com sucesso';
+
+        }else{
+            $success = false;
+            $message = 'Não é possivel reservar mais de um livro para mesma data';
+
+        }
+        $response = [
+            'success' => $success,
+            'message' => $message,
+        ];
+        return response()->json($response);
+
+
     }
 }

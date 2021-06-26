@@ -206,7 +206,8 @@ export default {
                         })
                         .then((response) => {
                             console.log(response.data);
-                            //this.$router.go(-1);
+                            const msg = response.data.message
+                            alert(msg);
                         });
                 })
                 .catch(function (error) {

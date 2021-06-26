@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\API\BookController;
-use App\Http\Controllers\API\ReservationController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,10 +21,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('login', [UserController::class, 'login']);
 Route::post('register', [UserController::class, 'register']);
-Route::post('logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
-Route::get('userbooks/{id}',[UserController::class, 'userbooks'])->name('api.books.userbooks');
-Route::get('availableBooks/{id}',[UserController::class, 'availableBooks'])->name('api.books.availableBooks');
-Route::get('userReservations/{id}',[UserController::class, 'userReservations'])->name('api.books.userReservations');
+
+Route::middleware('auth:sanctum')->group(function(){
+
+    Route::post('logout', [UserController::class, 'logout']);
+    Route::get('userbooks/{id}',[UserController::class, 'userbooks'])->name('api.books.userbooks');
+    Route::get('availableBooks/{id}',[UserController::class, 'availableBooks'])->name('api.books.availableBooks');
+    Route::get('userReservations/{id}',[UserController::class, 'userReservations'])->name('api.books.userReservations');
+    Route::post('reservation', [UserController::class, 'validateReservation'])->name('api.books.reservation');
+});
+
 
 Route::get('/lastadd', [BookController::class, 'lastadd'])->name('api.books.lastadd');
 
@@ -37,7 +42,7 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::post('update/{id}',[BookController::class, 'update'])->name('api.books.update');
     Route::delete('delete/{id}',[BookController::class, 'delete'])->name('api.books.delete');
 
-    Route::post('reservation', [ReservationController::class, 'add'])->name('api.reservations.add');
+
 });
 
 
