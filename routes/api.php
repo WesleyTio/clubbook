@@ -32,7 +32,8 @@ Route::middleware('auth:sanctum')->group(function(){
 });
 
 
-Route::get('/lastadd', [BookController::class, 'lastadd'])->name('api.books.lastadd');
+Route::get('lastadd', [BookController::class, 'lastadd'])->name('api.books.lastadd');
+Route::get('searchBook/{search}', [BookController::class, 'searchBook'])->name('api.books.searchBook');
 
 Route::middleware('auth:sanctum')->group(function() {
     Route::get('/',[BookController::class, 'index'])->name('api.books');

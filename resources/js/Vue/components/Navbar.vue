@@ -64,11 +64,36 @@ export default {
         }
 
         this.emitter.on('isLoggedIn', isLoggedIn => {
-            this.isLoggedIn = true
-            this.name = localStorage.getItem('user')
+            this.isLoggedIn = isLoggedIn
+            if(isLoggedIn){
+                this.name = localStorage.getItem('user')
+
+            }else{
+                localStorage.removeItem('isLoggedIn')
+                localStorage.removeItem('user')
+                localStorage.removeItem('userId')
+                this.name = null
+            }
             //
         })
 
+
+
+    },
+    mounted(){
+        this.emitter.on('isLoggedIn', isLoggedIn => {
+            this.isLoggedIn = isLoggedIn
+             if(isLoggedIn){
+                this.name = localStorage.getItem('user')
+
+            }else{
+                localStorage.removeItem('isLoggedIn')
+                localStorage.removeItem('user')
+                localStorage.removeItem('userId')
+                this.name = null
+            }
+            //
+        })
     },
     methods: {
         logout(){

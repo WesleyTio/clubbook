@@ -78,9 +78,43 @@ class BookController extends Controller
         }
 
         return response()->json($list_reservation);
+    }
+    public function searchBook($search){
 
+        $books = Book::all()->toArray();
 
+        $findBooks = array();
 
+        foreach($books as $book){
+
+            if(preg_match("/{$search}/i", $book['name'])){
+
+                array_push($findBooks, $book);
+
+            }else if(preg_match("/{$search}/i", $book['author'])){
+
+                array_push($findBooks, $book);
+
+            }else if(preg_match("/{$search}/i", $book['description'])){
+
+                array_push($findBooks, $book);
+            }
+        }
+        if(empty($findBooks)){
+            $success    = false;
+            $message    = 'Nemhum livro foi encontrado';
+            $table      = null;
+        }else{
+            $success    = true;
+            $message    = 'Livros encontrados';
+            $table      = $findBooks;
+        }
+        $response = [
+            'success' => $success,
+            'message' => $message,
+            'table'   => $table
+        ];
+        return response()->json($response);
     }
 
 }
