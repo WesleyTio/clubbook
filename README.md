@@ -15,7 +15,7 @@
   - Para este projeto usamos as seguintes dependências do VueJS : mitt, vue, vue-router, vue-axios
   - Usando o comando `npm install mitt --save` é instalada a dependencia responsável por emitir eventos entre os componentes da aplicação.
   - Usando o comando `npm install vue --save` para instalação do Vue.
-  - Usando o comando `npm install vue-router vue-axios --save` essas dependecias são responsáveis respectivamente gerenciar as rotas dos componentes e fazer a comunicação da API do Laravel com o VueJs
+  - Usando o comando `npm install vue-router@next vue-axios --save` essas dependecias são responsáveis respectivamente gerenciar as rotas dos componentes e fazer a comunicação da API do Laravel com o VueJs
  
 
 
