@@ -176,7 +176,7 @@ export default {
                 .get("/sanctum/csrf-cookie")
                 .then((response) => {
                     axios
-                        .post(`/api/update/${this.id}`, {
+                        .put(`/api/update/${this.id}`, {
                             name: this.book.name,
                             author: this.book.author,
                             description: this.book.description,

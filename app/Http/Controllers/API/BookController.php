@@ -23,6 +23,24 @@ class BookController extends Controller
         $reverse = $books->values()->take(5);
         return $reverse;
     }
+    public function booksName(){
+        $books = Book::all('name');
+        if(empty($books)){
+            $success = false;
+            $message = 'Lista de livros vazia';
+
+        }else{
+            $success = true;
+            $message = $books;
+        }
+        $response = [
+            'success' => $success,
+            'message' => $message,
+
+        ];
+        return response()->json($response);
+
+    }
     public function add(Request $request){
         $book = new Book([
             'name' => $request->name,

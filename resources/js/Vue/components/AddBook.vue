@@ -8,6 +8,7 @@
                     <div class="form-group">
                         <label>Titulo:</label>
                         <input type="text" class="form-control"  v-model="name" placeholder="A divina..."/>
+                        <p>{{validateName}}</p>
                     </div>
 
                     <div class="form-group">
@@ -29,10 +30,22 @@
 export default {
    data(){
       return{
-         name: '',
-         author: '',
-         description: ''
+        name: '',
+        author: '',
+        description: '',
+        booksName: []
       }
+   },
+   beforeCreate(){
+       axios.get('/sanctum/csrf-cookie').then(response =>{
+           axios.get('api/books').then(response =>{
+               console.log(response.data);
+                if(response.data.success){
+                    this.booksName = response.data.message;
+
+                }
+           })
+       })
    },
    methods:{
         save(e){
@@ -55,8 +68,19 @@ export default {
                     console.error(error.data);
                 });
             })
-        }
+        },
 
+
+   },
+   computed: {
+        validateName(){
+            const item = this.booksName.filter(element => element.name.toLowerCase().trim() === this.name.toLowerCase().trim());
+            if(item.length){
+                this.name = ''
+                alert("Já existe um livro cadastrado com esse titulo!")
+            }
+                //verifica se o nome do livro já não existe na base de dados
+        }
    }
 
 };

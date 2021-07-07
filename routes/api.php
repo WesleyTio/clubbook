@@ -37,10 +37,11 @@ Route::get('searchBook/{search}', [BookController::class, 'searchBook'])->name('
 
 Route::middleware('auth:sanctum')->group(function() {
     Route::get('/',[BookController::class, 'index'])->name('api.books');
+    Route::get('books',[BookController::class, 'booksName'])->name('api.books.booksName');
     Route::get('reservations/{id}',[BookController::class, 'reservations'])->name('api.books.reservations');
     Route::post('add',[BookController::class, 'add'])->name('api.books.add');
     Route::get('edit/{id}',[BookController::class, 'edit'])->name('api.books.edit');
-    Route::post('update/{id}',[BookController::class, 'update'])->name('api.books.update');
+    Route::put('update/{id}',[BookController::class, 'update'])->name('api.books.update');
     Route::delete('delete/{id}',[BookController::class, 'delete'])->name('api.books.delete');
 
 
