@@ -56,7 +56,7 @@ class UserController extends Controller
             $success = false;
             $message = 'email ou login invalidos';
         }
-
+        //vunerabilidade aqui pra concertar
         $response = [
             'user'    => Auth::user()->name,
             'userId'  => Auth::user()->id,
@@ -83,6 +83,19 @@ class UserController extends Controller
             'message' => $message,
         ];
         return response()->json($response);
+
+    }
+    public function update(Request $request){
+
+        $user = User::find(Auth::user()->id);
+        $user->update(['name' => $request->name, 'password' => Hash::make( $request->password)]);
+        $this->logout();
+        $response = [
+            'success' => true,
+            'message' => "Usuario atualizado com sucesso",
+        ];
+        return response()->json($response);
+
 
     }
     public function userbooks($id){
@@ -162,7 +175,7 @@ class UserController extends Controller
 
             $date_devolution = date_create($reservation->pivot->date_devolution);
             if($dateToday < $date_devolution){
-                $item = array('date_reservation' => $reservation->pivot->date_reservation, 'date_devolution' => $reservation->pivot->date_devolution);
+                $item = ['date_reservation' => $reservation->pivot->date_reservation, 'date_devolution' => $reservation->pivot->date_devolution];
                 array_push($list_reservations, $item);
 
             }

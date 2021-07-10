@@ -21,7 +21,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                      <router-link class="nav-link" to="/books">Alterar dados </router-link>
+                      <router-link class="nav-link" to="/userdata">Alterar dados </router-link>
                     </li>
                     <li class="nav-item">
                        <a class="nav-link" type="submit" @click.prevent="logout">Sair </a>

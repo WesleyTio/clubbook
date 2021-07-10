@@ -25,6 +25,7 @@ Route::post('register', [UserController::class, 'register']);
 Route::middleware('auth:sanctum')->group(function(){
 
     Route::post('logout', [UserController::class, 'logout']);
+    Route::put('updateUser', [UserController::class, 'update'])->name('api.user.updateUser');
     Route::get('userbooks/{id}',[UserController::class, 'userbooks'])->name('api.books.userbooks');
     Route::get('availableBooks/{id}',[UserController::class, 'availableBooks'])->name('api.books.availableBooks');
     Route::get('userReservations/{id}',[UserController::class, 'userReservations'])->name('api.books.userReservations');
