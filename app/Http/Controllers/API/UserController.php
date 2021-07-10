@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Session;
 class UserController extends Controller
 {
     //
-    private $list_books_reservation = array();
     public function register(Request $request){
         try{
             $user = new User();
@@ -26,75 +25,97 @@ class UserController extends Controller
 
             $success = true;
             $message = 'Usuario registrado com sucesso';
-
+            $response = [
+                'success' => $success,
+                'message' => $message,
+            ];
+            return response()->json($response, 200);
         } catch(QueryException $error){
             $success = false;
-            $message = 'email já cadastrado';
+            $message = $error;
 
         }
-
         $response = [
             'success' => $success,
             'message' => $message,
         ];
-        return response()->json($response);
+        return response()->json($response, 200);
 
     }
 
     public function login(Request $request){
 
 
+        $response = [];
         $dados = [
             'email' => $request->email,
             'password' => $request->password
         ];
 
         if(Auth::attempt($dados)){
-            $success = true;
-            $message = 'Usuario logado com sucesso';
+            $response = [
+                'user'    => Auth::user()->name,
+                'userId'  => Auth::user()->id,
+                'success' => true,
+                'message' => "Usuario logado com sucesso"
+            ];
+            return response()->json($response, 200);
         }else{
+
             $success = false;
-            $message = 'email ou login invalidos';
+            $message = 'email ou login inválidos';
         }
-        //vunerabilidade aqui pra concertar
         $response = [
-            'user'    => Auth::user()->name,
-            'userId'  => Auth::user()->id,
             'success' => $success,
-            'message' => $message,
+            'message' => $message
         ];
-        return response()->json($response);
+        return response()->json($response, 400);
 
     }
 
     public function logout(){
 
+        $response = [];
         try{
             Session::flush();
             $success = true;
             $message = 'Usuario deslogado com sucesso';
+            $response = [
+                'success' => $success,
+                'message' => $message,
+            ];
+            return response()->json($response, 200);
         } catch(QueryException $error){
             $success = false;
             $message = $error->getMessage();
+            $response = [
+                'success' => $success,
+                'message' => $message,
+            ];
+            return response()->json($response, 500);
         }
-
-        $response = [
-            'success' => $success,
-            'message' => $message,
-        ];
-        return response()->json($response);
 
     }
     public function update(Request $request){
 
-        $user = User::find(Auth::user()->id);
-        $user->update(['name' => $request->name, 'password' => Hash::make( $request->password)]);
-        $this->logout();
-        $response = [
-            'success' => true,
-            'message' => "Usuario atualizado com sucesso",
-        ];
-        return response()->json($response);
+        try {
+            $user = User::find(Auth::user()->id);
+            $user->update(['name' => $request->name, 'password' => Hash::make( $request->password)]);
+            $this->logout();
+
+            $response = [
+                'success' => true,
+                'message' => "Usuario atualizado com sucesso",
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
 
 
     }
@@ -104,11 +125,11 @@ class UserController extends Controller
         $list_books = array();
 
         foreach($user->books as $book){
-            $item = array('id' => $book->id, 'name' => $book->name, 'author' => $book->author, 'description' => $book->description);
+            $item = ['id' => $book->id, 'name' => $book->name, 'author' => $book->author, 'description' => $book->description];
             array_push($list_books, $item);
 
         }
-        return response()->json($list_books);
+        return response()->json($list_books, 200);
 
     }
     public function userReservations($id){
@@ -161,10 +182,8 @@ class UserController extends Controller
               }
            }
         }
-        return response()->json($books_available);
-        // receber o id do user
-        // listar todos o livros reservados por ele nos ultimos 30 dias
-        // se livro tiver sido reservado a mais de 30 dias esta disponivel novamente
+        return response()->json($books_available, 200);
+
     }
     private function listBooksReservation($id){
         $dateToday = date_create();

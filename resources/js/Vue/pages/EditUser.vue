@@ -59,6 +59,7 @@ export default {
                 .then(response => {
                     console.log(response.data);
                     if (response.data.success) {
+                        this.emitter.emit('isLoggedIn', false)
                         this.$router.push('/login')
                     }else{
                         this.errors = response.data.message

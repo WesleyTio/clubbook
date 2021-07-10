@@ -3,7 +3,7 @@
     <div>
         <div class="container-fluid d-flex justify-content-center h-100" style="margin-top: 10%">
             <div class="card shadow p-0 mb-3  rounded" style="width: 18rem;">
-                <div class="alert alert-danger" role="alert" v-if="isError()" style="align-self: center;">
+                <div class="alert alert-danger" role="alert" v-if="!errors.success" style="align-self: center;">
                     {{ errors.data }}
                 </div>
                 <div class=" card-body d-flex justify-content-center form_container">
@@ -50,13 +50,14 @@ export default {
                 email: '',
                 password: '',
             },
-            errors: {}
+            errors: {
+                success: true,
+                data: ''
+            }
         }
     },
     methods: {
-        isError(){
-            return Object.values(this.errors).length
-        },
+
         login(e){
             e.preventDefault()
             axios.get('/sanctum/csrf-cookie').then(response =>{
@@ -78,9 +79,10 @@ export default {
 
                     }
                 })
-                .catch(function (error) {
-                    console.error(error.data);
-                    this.errors = error.response.data.errors;
+                .catch(error => {
+                    console.error(error.response.data.success);
+                    //this.errors.success = error.response.data.success
+                    //this.errors.data = error.response.data.message
                 });
             })
         }
