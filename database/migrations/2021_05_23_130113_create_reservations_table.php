@@ -18,8 +18,8 @@ class CreateReservationsTable extends Migration
             $table->unsignedBigInteger('fk_book_reservation');
             $table->string('date_reservation');
             $table->string('date_devolution');
-            $table->foreign('fk_user_reservation')->references('id')->on('users');
-            $table->foreign('fk_book_reservation')->references('id')->on('books');
+            $table->foreign('fk_user_reservation')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('fk_book_reservation')->references('id')->on('books')->onDelete('cascade');;
             $table->timestamps();
         });
     }

@@ -18,10 +18,9 @@ class CreateBooksTable extends Migration
             $table->string('name');
             $table->string('author');
             $table->string('description');
-            //$table->string('genero') */chave estrangeira a ser imprementada no futuro
             $table->unsignedBigInteger('fk_users');
             $table->timestamps();
-            $table->foreign('fk_users')->references('id')->on('users');
+            $table->foreign('fk_users')->references('id')->on('users')->onDelete('cascade');;
 
         });
     }

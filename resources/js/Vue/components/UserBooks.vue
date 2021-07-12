@@ -68,10 +68,15 @@ export default {
                 axios.delete(`/api/delete/${id}`)
                 .then((response) => {
                     console.log(response.data);
-                    console.log(this.books);
-                    const result = this.books.find(book => book.id === id);
-                    this.books.splice(this.books.indexOf(result), 1)
-
+                    if(response.data.success){
+                        const result = this.books.find(book => book.id === id);
+                        this.books.splice(this.books.indexOf(result), 1)
+                    }else{
+                        alert(response.data.message)
+                    }
+                })
+                .catch(function (error){
+                    console.log(error)
                 });
             })
             .catch(function (error) {

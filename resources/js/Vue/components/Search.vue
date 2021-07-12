@@ -69,10 +69,9 @@ export default {
         searchBook(e){
             e.preventDefault(),
             axios.get(`api/searchBook/${this.search}`).then((response) => {
-                console.log(response.data);
                 if(response.data.success){
                     this.emitter.emit('viewTable', false)
-                    this.books = response.data.books
+                    this.books = response.data.table
                     this.viewTable = true
                 }
             }).catch((error) => {
