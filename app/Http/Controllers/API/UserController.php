@@ -145,13 +145,13 @@ class UserController extends Controller
 
             if($dateToday < $date_devolution){
 
-                $item = array('id' => $reservation->id , 'name' => $reservation->name, 'date_reservation' => $reservation->pivot->date_reservation, 'date_devolution' => $reservation->pivot->date_devolution);
+                $item = ['id' => $reservation->pivot->id , 'name' => $reservation->name, 'date_reservation' => $reservation->pivot->date_reservation, 'date_devolution' => $reservation->pivot->date_devolution];
                 array_push($list_reservations, $item);
 
             }
 
         }
-        return response()->json($list_reservations);
+        return response()->json($list_reservations, 200);
     }
     private function userListReservation($id){
         $dateToday = date_create();

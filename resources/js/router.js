@@ -7,6 +7,7 @@ import EditUser from './Vue/pages/EditUser.vue'
 import Home from './Vue/pages/Home.vue'
 import Books from './Vue/pages/books.vue'
 import Reservations from './Vue/pages/Reservations.vue'
+import EditReservation from './Vue/components/EditReservation.vue'
 import UserBooks from './Vue/components/UserBooks.vue'
 import EditBook from './Vue/components/EditBook.vue'
 import AddBook from './Vue/components/AddBook.vue'
@@ -52,6 +53,7 @@ export const routes = [
             children: [
                 { path: '', component: UserReservations, props: true},
                 { path: ':id', component: EditBook, props: true},
+                { path: ':id/editar/:book', component: EditReservation, props: true},
             ]
 
         }

@@ -54,8 +54,20 @@ class ReservationController extends Controller
     public function edit($id)
     {
         //
-        $reservation = Reservation::find($id);
-        return response()->json($reservation);
+        try {
+            //code...
+            $reservation = Reservation::find($id);
+            $response =[
+                'book_id'               =>  $reservation->fk_book_reservation,
+                'date_reservation'      =>  $reservation->date_reservation,
+                'date_devolution'       =>  $reservation->date_devolution
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json($th->getMessage(), 500);
+        }
+
 
 
     }
@@ -70,10 +82,35 @@ class ReservationController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $reservation = Reservation::find($id);
-        $reservation->update($request->all());
+        var_dump($id);
+        $list_user_books_reservations = $this->listReservationsUser($request->id_user);
+        $dateR = date_create($request->date_reservation);
+        $dateD = date_create($request->date_devolution);
+        $validate = true;
+        foreach($list_user_books_reservations as $reservation){
+            $date_devolution = date_create($reservation['date_devolution']);
+            $date_reservation = date_create($reservation['date_reservation']);
+            if($dateR < $date_devolution && ($reservation['id'] =! $id)){
+                if($dateD > $date_reservation){
+                    $validate = false;
+                }
+            }
+        }
+        if($validate){
+            $reservation = Reservation::find($id);
+            $reservation->update(['date_reservation' => $request->date_reservation, 'date_devolution' =>  $request->date_devolution]);
+            $success = true;
+            $message = 'Reserva atualizada com sucesso';
+        }else{
+            $success = false;
+            $message = 'Não é possivel reservar mais de um livro para mesma data';
+        }
+        $response = [
+            'success' => $success,
+            'message' => $message,
+        ];
+        return response()->json($response, 200);
 
-        return response()->json('Reserva alterada com sucesso');
     }
 
     /**
@@ -89,5 +126,27 @@ class ReservationController extends Controller
         $reservation->delete();
 
         return response()->json('Reserva deletada com sucesso');
+    }
+
+    private function listReservationsUser($id){
+        $dateToday = date_create();
+        $list_reservations = array();
+        try {
+            //code...
+            $list_reservation_user = Reservation::UserListReservation($id)->get();
+            foreach( $list_reservation_user as $reservation){
+                $date_devolution = date_create($reservation->date_devolution);
+                if($dateToday < $date_devolution){
+                    $item = ['date_reservation' => $reservation->date_reservation, 'date_devolution' => $reservation->date_devolution];
+                    array_push($list_reservations, $item);
+                }
+            }
+
+        } catch (\Throwable $th) {
+            //throw $th;
+            return $th->getMessage();
+        }
+
+        return $list_reservations;
     }
 }

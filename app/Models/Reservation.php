@@ -10,6 +10,9 @@ class Reservation extends Model
     use HasFactory;
     protected $fillable =[ 'fk_book_reservation','fk_user_reservation','date_reservation','date_devolution'];
 
-    
+    public function scopeUserListReservation($query, $type){
+
+        return $query->where('fk_user_reservation', '=' ,$type);
+    }
 
 }

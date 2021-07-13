@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\BookController;
+use App\Http\Controllers\API\ReservationController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,12 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::delete('delete/{id}',[BookController::class, 'delete'])->name('api.books.delete');
 
 
+});
+
+Route::middleware('auth:sanctum')->group(function() {
+    Route::get('editReservation/{id}',[ReservationController::class, 'edit'])->name('api.reservations.edit');
+    Route::put('updateReservation/{id}',[ReservationController::class, 'update'])->name('api.reservations.update');
+    Route::delete('deleteReservation/{id}',[ReservationController::class, 'destroy'])->name('api.reservations.delete');
 });
 
 

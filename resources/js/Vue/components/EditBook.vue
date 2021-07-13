@@ -222,7 +222,6 @@ export default {
                 const reservationDate = new Date(reservation.date_reservation);
                 if(dateR  < devolution.getTime()){
                     if(dateD > reservationDate.getTime()){
-                        console.log('segund0 if')
                         validate = false;
                     }
                 }
@@ -237,7 +236,6 @@ export default {
             const dateD = new Date(this.devolutionDate);
             const timeMilisegundo = dateD - dateR;
             const timeDays = Math.ceil(timeMilisegundo / (1000 * 60 * 60 * 24));
-            console.log(timeDays);
             if (this.toDay > dateR.getTime() || this.toDay > dateD.getTime()) {
                 alert('Data inválida!!!')
                 this.reservationDate = ''

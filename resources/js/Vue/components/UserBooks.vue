@@ -63,7 +63,6 @@ export default {
 
     methods: {
         deletar(id){
-
             axios.get("/sanctum/csrf-cookie").then((response) => {
                 axios.delete(`/api/delete/${id}`)
                 .then((response) => {

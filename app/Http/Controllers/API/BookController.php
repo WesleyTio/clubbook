@@ -38,7 +38,7 @@ class BookController extends Controller
             'message' => $message,
 
         ];
-        return response()->json($response);
+        return response()->json($response, 200);
 
     }
     public function add(Request $request){
@@ -138,12 +138,12 @@ class BookController extends Controller
             $date_devolution = date_create($reservation->pivot->date_devolution);
             if($dateToday < $date_devolution){
 
-                $item= ['name' => $reservation->name, 'date_reservation' => $reservation->pivot->date_reservation, 'date_devolution' => $reservation->pivot->date_devolution];
+                $item= ['id' => $reservation->pivot->id,'name' => $reservation->name, 'date_reservation' => $reservation->pivot->date_reservation, 'date_devolution' => $reservation->pivot->date_devolution];
                 array_push($list_reservation, $item);
             }
         }
 
-        return response()->json($list_reservation);
+        return response()->json($list_reservation, 200);
     }
     public function searchBook($search){
 
