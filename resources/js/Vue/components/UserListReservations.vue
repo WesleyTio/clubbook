@@ -46,12 +46,13 @@ export default {
     methods:{
         deletar(id){
             axios.get("/sanctum/csrf-cookie").then((response) => {
-                axios.delete(`/api/reservationdelete/${id}`)
+                axios.delete(`/api/deleteReservation/${id}`)
                 .then((response) => {
                     console.log(response.data);
                     if(response.data.success){
-                        const result = this.books.find(book => book.id === id);
-                        this.books.splice(this.books.indexOf(result), 1)
+                        this.emitter.emit('updateList', true)
+                        const result = this.userReservations.find(book => book.id === id);
+                        this.userReservations.splice(this.userReservations.indexOf(result), 1)
                     }else{
                         alert(response.data.message)
                     }

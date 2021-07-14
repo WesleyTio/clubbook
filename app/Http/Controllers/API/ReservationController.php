@@ -123,9 +123,23 @@ class ReservationController extends Controller
     {
         //
         $reservation = Reservation::find($id);
-        $reservation->delete();
+        try {
+            //code...
+            $reservation->delete();
+            $response =[
+                'success'   =>  true,
+                'message'   =>  'Reserva deletada com sucesso'
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            $response =[
+                'success'   =>  true,
+                'message'   =>  $th->getMessage()
+            ];
+            return response()->json($response, 500);
+        }
 
-        return response()->json('Reserva deletada com sucesso');
     }
 
     private function listReservationsUser($id){
