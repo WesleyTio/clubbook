@@ -80,7 +80,10 @@ export default {
                     }
                 })
                 .catch(error => {
-                    console.error(error.response.data.success);
+                    //console.error(error.response.data.success);
+                    alert("Email ou senha errados!")
+                    this.user.email = ''
+                    this.user.password = ''
                     //this.errors.success = error.response.data.success
                     //this.errors.data = error.response.data.message
                 });

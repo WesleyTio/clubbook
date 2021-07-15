@@ -208,6 +208,7 @@ export default {
                             console.log(response.data);
                             const msg = response.data.message
                             alert(msg);
+                            this.$router.go(-1)
                         });
                 })
                 .catch(function (error) {
