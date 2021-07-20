@@ -1,0 +1,19 @@
+{
+    "name": "vaneves/apirus",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Van Neves",
+            "email": "vaneves@vaneves.com"
+        }
+    ],
+    "require": {
+        "erusev/parsedown": "^1.7",
+        "symfony/yaml": "^5.0",
+        "league/climate": "^3.5",
+        "scrivo/highlight.php": "v9.18.1.1",
+        "symfony/dotenv": "^5.0",
+        "vaneves/tosko": "^0.0.4"
+    }
+}
