@@ -11,18 +11,18 @@ It is a long established fact that a reader will be distracted by the readable c
 curl --location --request POST '{{API_URL}}/register' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-	"username": "vaneves",
-	"email": "vaneves@vaneves.com",
+	"name": "Jão do Livro",
+	"email": "jaolivro@email.com",
 	"password": "123456"
 }'
 ```
 
-```request:Python
+```request:PHP
 import requests
 
 url = "{{API_URL}}/register"
 
-payload = "{\"username\": \"vaneves\", \"email\": \"vaneves@vaneves.com\", \"password\": \"123456\"\n}"
+payload = "{\"name\": \"Jão do Livro\", \"email\": \"jaolivro@email.com\", \"password\": \"123456\"\n}"
 headers = {
   'Content-Type': 'application/json'
 }
@@ -34,12 +34,14 @@ print(response.text.encode('utf8'))
 
 ```response:200
 {
-	"success": true
+	"success": true,
+    "message": "Usuário registrado com sucesso"
 }
 ```
 
-```response:400
+```response:500
 {
+    "success": false,
 	"error": "Username already exists"
 }
 ```

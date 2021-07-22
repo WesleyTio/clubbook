@@ -39,7 +39,7 @@ class UserController extends Controller
             'success' => $success,
             'message' => $message,
         ];
-        return response()->json($response, 200);
+        return response()->json($response, 500);
 
     }
 
